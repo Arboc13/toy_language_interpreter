@@ -5,6 +5,12 @@ build/
 !**/src/test/**/build/
 .kotlin
 
+.idea/
+*.iml
+out/
+.vscode/
+.DS_Store
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
