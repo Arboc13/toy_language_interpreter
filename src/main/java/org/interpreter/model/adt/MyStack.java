@@ -1,5 +1,8 @@
 package org.interpreter.model.adt;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class MyStack<T> implements IStack<T> {
     private final Deque<T> stack = new ArrayDeque<>(); // java.util
 
