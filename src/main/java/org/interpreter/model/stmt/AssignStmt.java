@@ -2,7 +2,7 @@ package org.interpreter.model.stmt;
 
 import org.interpreter.model.exp.IExp;
 import org.interpreter.model.value.IValue;
-import org.interpreter.model.*
+import org.interpreter.model.*;
 
 public record AssignStmt(String id, IExp exp) implements IStmt { // S2
     @Override

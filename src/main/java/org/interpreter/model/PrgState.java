@@ -1,9 +1,4 @@
-package org.interpreter.model;
-
-import org.interpreter.model.adt.IDictionary;
-import org.interpreter.model.adt.IList;
-import org.interpreter.model.adt.IStack;
-import org.interpreter.model.adt.MyStack;
+import org.interpreter.model.adt.*;
 import org.interpreter.model.stmt.IStmt;
 import org.interpreter.model.value.IValue;
 
@@ -22,5 +17,10 @@ public class PrgState {
     }
     // getters, setters, toString ...
 }
+
+private IStmt program;
 PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(),
         new MyList<>(), program);
+
+void main() {
+}

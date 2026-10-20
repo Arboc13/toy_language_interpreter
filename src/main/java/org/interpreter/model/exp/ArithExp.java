@@ -1,6 +1,7 @@
 package org.interpreter.model.exp;
 
 import org.interpreter.model.adt.IDictionary;
+import org.interpreter.model.adt.MyException;
 import org.interpreter.model.value.IValue;
 import org.interpreter.model.value.IntValue;
 
