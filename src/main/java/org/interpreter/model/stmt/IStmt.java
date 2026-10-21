@@ -5,6 +5,6 @@ import org.interpreter.exceptions.MyException;
 import org.interpreter.model.prgstate.PrgState;
 
 public interface IStmt {
-    PrgState execute(PrgState state) throws MyException, ADTException;
+    PrgState execute(PrgState state) throws MyException;
 }
 

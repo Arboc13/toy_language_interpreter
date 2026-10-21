@@ -1,6 +1,6 @@
 package org.interpreter.exceptions;
 
-public class ADTException extends Exception {
+public class ADTException extends MyException {
     public ADTException(String message) {
         super(message);
     }

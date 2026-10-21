@@ -11,7 +11,7 @@ public record AssignStmt(String id, IExp exp) implements IStmt {
 
     // S2
     @Override
-    public PrgState execute(PrgState state) throws MyException, ADTException {
+    public PrgState execute(PrgState state) throws MyException {
         var symTable = state.getSymTable();
         if (!symTable.isDefined(id))
             throw new StatementException("variable " + id + " was not declared");
