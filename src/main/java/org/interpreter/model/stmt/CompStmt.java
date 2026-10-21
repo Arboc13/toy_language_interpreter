@@ -1,6 +1,10 @@
 package org.interpreter.model.stmt;
 
-public record CompStmt(IStmt first, IStmt second) implements IStmt { // S1
+import org.interpreter.model.prgstate.PrgState;
+
+public record CompStmt(IStmt first, IStmt second) implements IStmt {
+
+    // S1
     @Override
     public PrgState execute(PrgState state) {
         state.getExeStack().push(second);
