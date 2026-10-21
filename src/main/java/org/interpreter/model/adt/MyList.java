@@ -1,5 +1,7 @@
 package org.interpreter.model.adt;
 
+import org.interpreter.exceptions.ADTException;
+
 import java.util.*;
 
 public class MyList<T> implements IList{

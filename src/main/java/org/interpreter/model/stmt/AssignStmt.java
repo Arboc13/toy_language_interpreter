@@ -1,11 +1,11 @@
 package org.interpreter.model.stmt;
 
-import org.interpreter.model.adt.ADTException;
-import org.interpreter.model.adt.MyException;
+import org.interpreter.exceptions.ADTException;
+import org.interpreter.exceptions.MyException;
+import org.interpreter.exceptions.StatementException;
 import org.interpreter.model.exp.IExp;
 import org.interpreter.model.value.IValue;
 import org.interpreter.model.prgstate.PrgState;
-import org.interpreter.model.adt.ADTException;
 
 public record AssignStmt(String id, IExp exp) implements IStmt {
 

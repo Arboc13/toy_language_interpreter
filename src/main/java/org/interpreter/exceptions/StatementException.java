@@ -1,4 +1,4 @@
-package org.interpreter.model.stmt;
+package org.interpreter.exceptions;
 
 public class StatementException extends RuntimeException {
     public StatementException(String message) {

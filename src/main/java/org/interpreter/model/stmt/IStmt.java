@@ -1,7 +1,7 @@
 package org.interpreter.model.stmt;
 
-import org.interpreter.model.adt.ADTException;
-import org.interpreter.model.adt.MyException;
+import org.interpreter.exceptions.ADTException;
+import org.interpreter.exceptions.MyException;
 import org.interpreter.model.prgstate.PrgState;
 
 public interface IStmt {

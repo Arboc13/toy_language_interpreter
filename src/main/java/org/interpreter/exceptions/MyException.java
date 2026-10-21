@@ -1,4 +1,4 @@
-package org.interpreter.model.adt;
+package org.interpreter.exceptions;
 
 public class MyException extends RuntimeException {
     public MyException(String message) {

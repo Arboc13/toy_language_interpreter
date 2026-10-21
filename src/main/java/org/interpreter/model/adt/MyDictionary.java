@@ -1,5 +1,6 @@
 package org.interpreter.model.adt;
 
+import org.interpreter.exceptions.ADTException;
 import org.interpreter.model.type.IType;
 
 import java.util.HashMap;

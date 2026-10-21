@@ -1,4 +1,4 @@
-package org.interpreter.model.exp;
+package org.interpreter.exceptions;
 
 public class ExpressionException extends RuntimeException {
     public ExpressionException(String message) {

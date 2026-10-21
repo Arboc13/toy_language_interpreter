@@ -1,0 +1,36 @@
+package org.interpreter.controller;
+
+import com.sun.nio.sctp.IllegalReceiveException;
+import org.interpreter.exceptions.ADTException;
+import org.interpreter.exceptions.MyException;
+import org.interpreter.exceptions.StatementException;
+import org.interpreter.model.prgstate.PrgState;
+import org.interpreter.model.stmt.IStmt;
+import org.interpreter.repository.IRepository;
+
+import static jdk.internal.org.jline.keymap.KeyMap.display;
+
+
+public class Controller {
+    private final IRepository repo;
+
+    public Controller(IRepository repo) {
+        this.repo = repo;
+    }
+
+    public PrgState oneStep(PrgState state) throws MyException, ADTException {
+        var stack = state.getExeStack();
+        if (stack.isEmpty()) throw new StatementException("program state stack is empty");
+        IStmt crtStmt = stack.pop();
+        return crtStmt.execute(state);
+    }
+    public void allStep() throws MyException, ADTException {
+        PrgState prg = repo.getCrtPrg();
+        display(prg.toString()); // only if the display flag is on
+        while (!prg.getExeStack().isEmpty()) {
+            oneStep(prg);
+            display(prg.toString());
+        }
+    }
+
+}

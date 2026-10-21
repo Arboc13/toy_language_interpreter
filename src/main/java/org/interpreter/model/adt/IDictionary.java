@@ -1,5 +1,7 @@
 package org.interpreter.model.adt;
 
+import org.interpreter.exceptions.ADTException;
+
 public interface IDictionary<K,V> {
     boolean isDefined(K key);
     V lookup(K key) throws ADTException;

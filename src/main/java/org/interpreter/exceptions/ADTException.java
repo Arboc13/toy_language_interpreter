@@ -1,4 +1,4 @@
-package org.interpreter.model.adt;
+package org.interpreter.exceptions;
 
 public class ADTException extends Exception {
     public ADTException(String message) {
