@@ -34,6 +34,18 @@ public class PrgState {
     @Override
     public String toString(){ return "";}
 
+    public void setExeStack(IStack<IStmt> exeStack) {
+        this.exeStack = exeStack;
+    }
+
+    public void setOut(IList<IValue> out) {
+        this.out = out;
+    }
+
+    public void setSymTable(IDictionary<String, IValue> symTable) {
+        this.symTable = symTable;
+    }
+
 
     // getters, setters, toString ...
 }

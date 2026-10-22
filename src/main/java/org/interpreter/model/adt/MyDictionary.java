@@ -35,4 +35,7 @@ public class MyDictionary<K,V> implements IDictionary{
 
         dict.replace((K)key, (V)value);
     }
+
+    @Override
+    public String toString(){ return dict.toString(); }
 }

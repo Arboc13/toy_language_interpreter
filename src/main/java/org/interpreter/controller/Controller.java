@@ -8,7 +8,6 @@ import org.interpreter.model.prgstate.PrgState;
 import org.interpreter.model.stmt.IStmt;
 import org.interpreter.repository.IRepository;
 
-import static jdk.internal.org.jline.keymap.KeyMap.display;
 
 
 public class Controller {
@@ -26,10 +25,10 @@ public class Controller {
     }
     public void allStep() throws MyException {
         PrgState prg = repo.getCrtPrg();
-        display(prg.toString()); // only if the display flag is on
+        //display(prg.toString()); // only if the display flag is on
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
-            display(prg.toString());
+            //display(prg.toString());
         }
     }
 
