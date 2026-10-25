@@ -14,9 +14,10 @@ public class PrgState {
 
     public PrgState(IStack<IStmt> exeStack, IDictionary<String, IValue> symTable,
                     IList<IValue> out, IStmt program) {
-        this.exeStack = exeStack;
-        this.symTable = symTable;
-        this.out = out;
+        this.exeStack = exeStack; // the statements that still have to be executed; the
+                                  // top is executed next
+        this.symTable = symTable; // the declared variables and their current values
+        this.out = out; // the values printed so far, in order
         this.originalProgram = program;
         exeStack.push(program);
     }
