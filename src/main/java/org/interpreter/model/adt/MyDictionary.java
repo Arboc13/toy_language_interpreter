@@ -1,7 +1,6 @@
 package org.interpreter.model.adt;
 
 import org.interpreter.exceptions.ADTException;
-import org.interpreter.model.type.IType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +17,7 @@ public class MyDictionary<K,V> implements IDictionary{
 
         if (!this.isDefined(key))
             throw new ADTException("Key doesn't exist");
-        if (!(dict.get(key) instanceof IType))
-            throw new ADTException("Unknown type");
-        return null;
+        return dict.get(key);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class MyList<T> implements IList{
 
     @Override
     public Object get(int index) throws ADTException {
-        if (index >= list.size()){
+        if (index < 0 || index >= list.size()){
             throw new ADTException("Invalid index.");
         }
         return list.get(index);
