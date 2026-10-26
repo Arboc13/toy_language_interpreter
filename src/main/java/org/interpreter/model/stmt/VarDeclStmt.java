@@ -5,6 +5,8 @@ import org.interpreter.exceptions.StatementException;
 import org.interpreter.model.prgstate.PrgState;
 import org.interpreter.model.type.IType;
 
+import java.util.Objects;
+
 public record VarDeclStmt(String name, IType type) implements IStmt {
 
     @Override
@@ -17,4 +19,16 @@ public record VarDeclStmt(String name, IType type) implements IStmt {
     }
 
     @Override public String toString() { return type + " " + name; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        VarDeclStmt that = (VarDeclStmt) o;
+        return Objects.equals(type, that.type) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type);
+    }
 }

@@ -7,6 +7,8 @@ import org.interpreter.model.exp.IExp;
 import org.interpreter.model.value.IValue;
 import org.interpreter.model.prgstate.PrgState;
 
+import java.util.Objects;
+
 public record AssignStmt(String id, IExp exp) implements IStmt {
 
     // S2
@@ -23,6 +25,18 @@ public record AssignStmt(String id, IExp exp) implements IStmt {
         return state;
     }
     @Override public String toString() { return id + " = " + exp; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        AssignStmt that = (AssignStmt) o;
+        return Objects.equals(exp, that.exp) && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, exp);
+    }
 }
 
 

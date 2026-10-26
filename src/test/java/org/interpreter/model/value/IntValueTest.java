@@ -17,4 +17,14 @@ class IntValueTest {
     public void toStringTest(){
         assertEquals("1", new IntValue(1).toString());
     }
+
+    @Test
+    public void equalsTest(){
+
+        var val1 = new IntValue(3);
+        var val2 = new IntValue(3);
+
+        assertEquals(val1, val2);
+        assertTrue(val1.equals(val2));
+    }
 }

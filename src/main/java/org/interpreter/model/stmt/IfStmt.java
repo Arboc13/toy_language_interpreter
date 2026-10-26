@@ -6,6 +6,8 @@ import org.interpreter.model.exp.IExp;
 import org.interpreter.model.prgstate.PrgState;
 import org.interpreter.model.value.BoolValue;
 
+import java.util.Objects;
+
 public record IfStmt(IExp cond, IStmt thenS, IStmt elseS) implements IStmt {
 
     @Override
@@ -19,5 +21,17 @@ public record IfStmt(IExp cond, IStmt thenS, IStmt elseS) implements IStmt {
     @Override
     public String toString() {
         return "(if " + cond + " then " + thenS + " else " + elseS + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        IfStmt ifStmt = (IfStmt) o;
+        return Objects.equals(cond, ifStmt.cond) && Objects.equals(thenS, ifStmt.thenS) && Objects.equals(elseS, ifStmt.elseS);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cond, thenS, elseS);
     }
 }
