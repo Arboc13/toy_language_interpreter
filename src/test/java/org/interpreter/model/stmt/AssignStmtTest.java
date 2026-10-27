@@ -1,5 +1,7 @@
 package org.interpreter.model.stmt;
 
+import org.interpreter.exceptions.ADTException;
+import org.interpreter.exceptions.MyException;
 import org.interpreter.exceptions.StatementException;
 import org.interpreter.model.adt.MyDictionary;
 import org.interpreter.model.adt.MyList;
@@ -18,14 +20,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AssignStmtTest {
 
-    private PrgState state(IStmt stmt){
+    private PrgState state(IStmt stmt) throws ADTException {
         PrgState state = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), stmt);
         state.getExeStack().pop();
         return state;
     }
 
     @Test
-    public void executeTest(){
+    public void executeTest() throws MyException {
         AssignStmt stmt = new AssignStmt("a", new ValueExp(new IntValue(5)));
         PrgState state = state(stmt);
         state.getSymTable().put("a", new IntValue(0));
@@ -35,7 +37,7 @@ class AssignStmtTest {
     }
 
     @Test
-    public void executeWithExpressionTest(){
+    public void executeWithExpressionTest() throws MyException {
         AssignStmt stmt = new AssignStmt("a", new ArithExp(ArithOp.ADD, new VarExp("a"), new ValueExp(new IntValue(2))));
         PrgState state = state(stmt);
         state.getSymTable().put("a", new IntValue(3));
@@ -46,7 +48,7 @@ class AssignStmtTest {
     }
 
     @Test
-    public void notDeclaredTestError(){
+    public void notDeclaredTestError() throws ADTException {
         AssignStmt stmt = new AssignStmt("a", new ValueExp(new IntValue(5)));
         PrgState state = state(stmt);
 
@@ -54,7 +56,7 @@ class AssignStmtTest {
     }
 
     @Test
-    public void typeMismatchTestError(){
+    public void typeMismatchTestError() throws ADTException {
         AssignStmt stmt = new AssignStmt("a", new ValueExp(new BoolValue(true)));
         PrgState state = state(stmt);
         state.getSymTable().put("a", new IntValue(0));

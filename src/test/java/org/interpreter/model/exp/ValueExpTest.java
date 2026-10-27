@@ -1,5 +1,6 @@
 package org.interpreter.model.exp;
 
+import org.interpreter.exceptions.MyException;
 import org.interpreter.model.adt.MyDictionary;
 import org.interpreter.model.value.BoolValue;
 import org.interpreter.model.value.IValue;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ValueExpTest {
 
     @Test
-    public void evalTest(){
+    public void evalTest() throws MyException {
         MyDictionary<String, IValue> symTable = new MyDictionary<String, IValue>();
 
         assertEquals(new IntValue(5), new ValueExp(new IntValue(5)).eval(symTable));

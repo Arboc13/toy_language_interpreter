@@ -1,5 +1,6 @@
 package org.interpreter.model.stmt;
 
+import org.interpreter.exceptions.ADTException;
 import org.interpreter.model.adt.MyDictionary;
 import org.interpreter.model.adt.MyList;
 import org.interpreter.model.adt.MyStack;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class NopStmtTest {
 
     @Test
-    public void executeChangesNothingTest(){
+    public void executeChangesNothingTest() throws ADTException {
         PrgState state = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), new NopStmt());
         state.getExeStack().pop();
         state.getSymTable().put("v", new IntValue(1));

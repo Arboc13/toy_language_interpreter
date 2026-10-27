@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MyListTest {
 
     @Test
-    public void addTest(){
+    public void addTest() throws ADTException {
         MyList<IntValue> list = new MyList<IntValue>();
 
         list.add(new IntValue(10));

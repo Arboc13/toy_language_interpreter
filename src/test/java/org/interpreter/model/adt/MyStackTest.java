@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MyStackTest {
 
     @Test
-    public void pushPopTest(){
+    public void pushPopTest() throws ADTException {
         MyStack<IntValue> stack = new MyStack<IntValue>();
 
         stack.push(new IntValue(1));
@@ -22,7 +22,7 @@ class MyStackTest {
     }
 
     @Test
-    public void isEmptyTest(){
+    public void isEmptyTest() throws ADTException {
         MyStack<IntValue> stack = new MyStack<IntValue>();
 
         assertTrue(stack.isEmpty());

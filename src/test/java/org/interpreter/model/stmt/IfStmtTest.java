@@ -1,5 +1,7 @@
 package org.interpreter.model.stmt;
 
+import org.interpreter.exceptions.ADTException;
+import org.interpreter.exceptions.MyException;
 import org.interpreter.exceptions.StatementException;
 import org.interpreter.model.adt.MyDictionary;
 import org.interpreter.model.adt.MyList;
@@ -22,13 +24,13 @@ class IfStmtTest {
     private PrgState state;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws ADTException {
         state = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), new NopStmt());
         state.getExeStack().pop();
     }
 
     @Test
-    public void trueConditionPushesThenTest(){
+    public void trueConditionPushesThenTest() throws MyException {
         new IfStmt(new ValueExp(new BoolValue(true)), thenS, elseS).execute(state);
 
         assertEquals(thenS, state.getExeStack().pop());
@@ -36,7 +38,7 @@ class IfStmtTest {
     }
 
     @Test
-    public void falseConditionPushesElseTest(){
+    public void falseConditionPushesElseTest() throws MyException {
         new IfStmt(new ValueExp(new BoolValue(false)), thenS, elseS).execute(state);
 
         assertEquals(elseS, state.getExeStack().pop());
@@ -44,7 +46,7 @@ class IfStmtTest {
     }
 
     @Test
-    public void conditionFromVariableTest(){
+    public void conditionFromVariableTest() throws MyException {
         state.getSymTable().put("a", new BoolValue(true));
 
         new IfStmt(new VarExp("a"), thenS, elseS).execute(state);

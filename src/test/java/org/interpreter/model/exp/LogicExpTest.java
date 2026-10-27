@@ -19,7 +19,7 @@ class LogicExpTest {
     }
 
     @Test
-    public void andTest(){
+    public void andTest() throws MyException {
         assertEquals(new BoolValue(true), exp(LogicOp.AND, true, true).eval(symTable));
         assertEquals(new BoolValue(false), exp(LogicOp.AND, true, false).eval(symTable));
         assertEquals(new BoolValue(false), exp(LogicOp.AND, false, true).eval(symTable));
@@ -27,7 +27,7 @@ class LogicExpTest {
     }
 
     @Test
-    public void orTest(){
+    public void orTest() throws MyException {
         assertEquals(new BoolValue(true), exp(LogicOp.OR, true, true).eval(symTable));
         assertEquals(new BoolValue(true), exp(LogicOp.OR, true, false).eval(symTable));
         assertEquals(new BoolValue(true), exp(LogicOp.OR, false, true).eval(symTable));

@@ -1,6 +1,7 @@
 package org.interpreter.model.exp;
 
 import org.interpreter.exceptions.ExpressionException;
+import org.interpreter.exceptions.MyException;
 import org.interpreter.model.adt.IDictionary;
 import org.interpreter.model.adt.MyDictionary;
 import org.interpreter.model.value.IValue;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class VarExpTest {
 
     @Test
-    public void evalTest(){
+    public void evalTest() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<String, IValue>();
         symTable.put("a", new IntValue(3));
 
@@ -27,7 +28,7 @@ class VarExpTest {
     }
 
     @Test
-    public void inArithExpTest(){
+    public void inArithExpTest() throws MyException {
         IDictionary<String, IValue> symTable = new MyDictionary<String, IValue>();
         symTable.put("a", new IntValue(3));
 

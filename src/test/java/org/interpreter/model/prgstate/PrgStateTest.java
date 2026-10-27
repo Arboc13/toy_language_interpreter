@@ -1,5 +1,6 @@
 package org.interpreter.model.prgstate;
 
+import org.interpreter.exceptions.ADTException;
 import org.interpreter.model.adt.IDictionary;
 import org.interpreter.model.adt.IList;
 import org.interpreter.model.adt.IStack;
@@ -20,7 +21,7 @@ class PrgStateTest {
     private final IStmt program = new AssignStmt("a", new ValueExp(new IntValue(1)));
 
     @Test
-    public void constructorPushesProgramTest(){
+    public void constructorPushesProgramTest() throws ADTException {
         IStack<IStmt> stack = new MyStack<IStmt>();
         PrgState state = new PrgState(stack, new MyDictionary<String, IValue>(), new MyList<IValue>(), program);
 

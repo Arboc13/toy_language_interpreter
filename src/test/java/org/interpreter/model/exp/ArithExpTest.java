@@ -1,6 +1,7 @@
 package org.interpreter.model.exp;
 
 import org.interpreter.exceptions.ExpressionException;
+import org.interpreter.exceptions.MyException;
 import org.interpreter.model.adt.IDictionary;
 import org.interpreter.model.adt.MyDictionary;
 import org.interpreter.model.value.BoolValue;
@@ -19,22 +20,22 @@ class ArithExpTest {
     }
 
     @Test
-    public void addTest(){
+    public void addTest() throws MyException {
         assertEquals(new IntValue(7), exp(ArithOp.ADD, 3, 4).eval(symTable));
     }
 
     @Test
-    public void subTest(){
+    public void subTest() throws MyException {
         assertEquals(new IntValue(-1), exp(ArithOp.SUB, 3, 4).eval(symTable));
     }
 
     @Test
-    public void mulTest(){
+    public void mulTest() throws MyException {
         assertEquals(new IntValue(12), exp(ArithOp.MUL, 3, 4).eval(symTable));
     }
 
     @Test
-    public void divTest(){
+    public void divTest() throws MyException {
         assertEquals(new IntValue(3), exp(ArithOp.DIV, 7, 2).eval(symTable));
     }
 
@@ -44,7 +45,7 @@ class ArithExpTest {
     }
 
     @Test
-    public void nestedTest(){
+    public void nestedTest() throws MyException {
         ArithExp nested = new ArithExp(ArithOp.MUL, exp(ArithOp.ADD, 1, 2), new ValueExp(new IntValue(4)));
 
         assertEquals(new IntValue(12), nested.eval(symTable));
