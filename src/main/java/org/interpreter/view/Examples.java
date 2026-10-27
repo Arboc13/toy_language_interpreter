@@ -42,5 +42,14 @@ public final class Examples {
                                     new AssignStmt("v", new ValueExp(new IntValue(3)))),
                                     new PrintStmt(new VarExp("v"))))));
 
-    public static final List<IStmt> ALL = List.of(EX1, EX2, EX3);
+    public static final IStmt EX4 = new CompStmt(new VarDeclStmt("a", new BoolType()),
+            new CompStmt(new VarDeclStmt("v", new IntType()),
+                    new CompStmt( new PrintStmt(new VarExp("a")),
+                    new CompStmt(new AssignStmt("a", new ValueExp(new BoolValue(true))),
+                            new CompStmt(new IfStmt(new VarExp("a"),
+                                    new AssignStmt("v", new ValueExp(new IntValue(2))),
+                                    new AssignStmt("v", new ValueExp(new IntValue(3)))),
+                                    new PrintStmt(new VarExp("v")))))));
+
+    public static final List<IStmt> ALL = List.of(EX1, EX2, EX3, EX4);
 }
