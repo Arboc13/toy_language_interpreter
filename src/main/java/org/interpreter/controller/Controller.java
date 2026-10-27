@@ -23,13 +23,20 @@ public class Controller {
         IStmt crtStmt = stack.pop();
         return crtStmt.execute(state);
     }
-    public void allStep() throws MyException {
+    public void allStep(boolean display_f) throws MyException {
         PrgState prg = repo.getCrtPrg();
-        //display(prg.toString()); // only if the display flag is on
+        if (display_f)
+            display(prg.toString()); // only if the display flag is on
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
-            //display(prg.toString());
+            if (display_f)
+                display(prg.toString());
         }
     }
+
+    public void display(String program){
+        IO.println(program + "\n");
+    }
+
 
 }

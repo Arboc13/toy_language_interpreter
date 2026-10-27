@@ -33,7 +33,7 @@ public class PrgState {
     }
 
     @Override
-    public String toString(){ return "";}
+    public String toString(){ return "ExeStack: " + exeStack  + "\nSymTable: " + symTable + "\nOut: " + out ;}
 
     public void setExeStack(IStack<IStmt> exeStack) {
         this.exeStack = exeStack;
@@ -48,5 +48,4 @@ public class PrgState {
     }
 
 
-    // getters, setters, toString ...
 }

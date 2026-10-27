@@ -20,7 +20,7 @@ class MyDictionaryTest {
     }
 
     @Test
-    public void lookupTest(){
+    public void lookupTest() throws ADTException {
         MyDictionary<String, IntValue> dict = new MyDictionary<String, IntValue>();
 
         dict.put("a", new IntValue(1));
@@ -38,7 +38,7 @@ class MyDictionaryTest {
     }
 
     @Test
-    public void putOverwritesTest(){
+    public void putOverwritesTest() throws ADTException {
         MyDictionary<String, IntValue> dict = new MyDictionary<String, IntValue>();
 
         dict.put("a", new IntValue(1));
@@ -48,7 +48,7 @@ class MyDictionaryTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() throws ADTException {
         MyDictionary<String, BoolValue> dict = new MyDictionary<String, BoolValue>();
 
         dict.put("a", new BoolValue(false));
