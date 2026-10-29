@@ -1,5 +1,6 @@
 package org.interpreter.model.stmt;
 
+import org.interpreter.exceptions.ExpressionException;
 import org.interpreter.exceptions.MyException;
 import org.interpreter.exceptions.StatementException;
 import org.interpreter.model.prgstate.PrgState;
@@ -10,7 +11,7 @@ import java.util.Objects;
 public record VarDeclStmt(String name, IType type) implements IStmt {
 
     @Override
-    public PrgState execute(PrgState state) throws MyException {
+    public PrgState execute(PrgState state) throws StatementException {
         var symTable = state.getSymTable();
         if (symTable.isDefined(name))
             throw new StatementException("variable " + name + " is already declared");
