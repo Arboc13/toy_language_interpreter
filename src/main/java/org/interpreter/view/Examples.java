@@ -51,7 +51,10 @@ public final class Examples {
                                     new AssignStmt("v", new ValueExp(new IntValue(3)))),
                                     new PrintStmt(new VarExp("v")))))));
 
-    public static final List<IStmt> ALL = List.of(EX1, EX2, EX3, EX4);
+    public static final IStmt EX5 = new CompStmt(new VarDeclStmt("a", new IntType()),
+            new AssignStmt("a", new ValueExp(new BoolValue(true))));
+
+    public static final List<IStmt> ALL = List.of(EX1, EX2, EX3, EX4, EX5);
 }
 
 //todo: do some cases that faile
