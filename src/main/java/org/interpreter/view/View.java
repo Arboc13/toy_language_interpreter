@@ -61,7 +61,7 @@ public class View {
             return;
         }
         Repository repo = new Repository();
-        repo.addPrg(new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), selected));
+        repo.addPrg(PrgState.of(selected));
         try {
             new Controller(repo).allStep(true);
         } catch (MyException e) {

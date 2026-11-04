@@ -1,26 +1,32 @@
 package org.interpreter.model.prgstate;
 
-import org.interpreter.model.adt.IDictionary;
-import org.interpreter.model.adt.IList;
-import org.interpreter.model.adt.IStack;
+import org.interpreter.model.adt.*;
 import org.interpreter.model.stmt.IStmt;
 import org.interpreter.model.value.IValue;
+import org.interpreter.model.value.StringValue;
+
+import java.io.BufferedReader;
 
 public class PrgState {
     private IStack<IStmt> exeStack;
     private IDictionary<String, IValue> symTable;
     private IList<IValue> out;
+    private IDictionary<StringValue, BufferedReader> fileTable;
     private final IStmt originalProgram;
 
     public PrgState(IStack<IStmt> exeStack, IDictionary<String, IValue> symTable,
-                    IList<IValue> out, IStmt program) {
+                    IList<IValue> out, IDictionary<StringValue, BufferedReader> fileTable, IStmt program ) {
         this.exeStack = exeStack; // the statements that still have to be executed; the
                                   // top is executed next
         this.symTable = symTable; // the declared variables and their current values
         this.out = out; // the values printed so far, in order
+        this.fileTable = fileTable;
         this.originalProgram = program;
         exeStack.push(program);
     }
+
+    public static PrgState of(IStmt program) { return new PrgState(new MyStack<IStmt>(),
+            new MyDictionary<String, IValue>(), new MyList<IValue>(), new MyDictionary<StringValue, BufferedReader>(), program); }
 
     public IStack<IStmt> getExeStack() {
         return this.exeStack;
