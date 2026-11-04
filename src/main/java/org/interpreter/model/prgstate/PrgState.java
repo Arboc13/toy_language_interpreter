@@ -54,4 +54,7 @@ public class PrgState {
     }
 
 
+    public IDictionary<StringValue, BufferedReader> getFileTable() {
+        return this.fileTable;
+    }
 }
