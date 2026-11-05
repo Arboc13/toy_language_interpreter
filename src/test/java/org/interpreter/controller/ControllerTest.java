@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
 
     private PrgState state(IStmt program){
-        PrgState state = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), program);
+        PrgState state =  PrgState.of(program);
         state.getSymTable().put("a", new IntValue(0));
         state.getSymTable().put("b", new IntValue(0));
         return state;
@@ -74,7 +74,7 @@ class ControllerTest {
     }
 
     private PrgState run(IStmt program) throws MyException {
-        PrgState state = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), program);
+        PrgState state =  PrgState.of(program);
         new Controller(() -> state).allStep(true);
         return state;
     }

@@ -15,7 +15,7 @@ class NopStmtTest {
 
     @Test
     public void executeChangesNothingTest() throws ADTException {
-        PrgState state = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), new NopStmt());
+        PrgState state = PrgState.of(new NopStmt());
         state.getExeStack().pop();
         state.getSymTable().put("v", new IntValue(1));
 

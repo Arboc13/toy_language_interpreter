@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AssignStmtTest {
 
     private PrgState state(IStmt stmt) throws ADTException {
-        PrgState state = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), stmt);
+        PrgState state = PrgState.of(stmt);
         state.getExeStack().pop();
         return state;
     }

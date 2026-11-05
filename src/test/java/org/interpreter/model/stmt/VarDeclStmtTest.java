@@ -23,7 +23,7 @@ class VarDeclStmtTest {
 
     @BeforeEach
     public void setUp() throws ADTException {
-        state = new PrgState(new MyStack<IStmt>(), new MyDictionary<String, IValue>(), new MyList<IValue>(), new NopStmt());
+        state = PrgState.of(new NopStmt());
         state.getExeStack().pop();
     }
 
