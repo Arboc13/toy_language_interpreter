@@ -66,6 +66,40 @@ class MyDictionaryTest {
     }
 
     @Test
+    public void removeTest() throws ADTException {
+        MyDictionary<String, BoolValue> dict = new MyDictionary<String, BoolValue>();
+
+        dict.put("a", new BoolValue(false));
+        dict.remove("a");
+
+        assertEquals(false, dict.isDefined("a"));
+    }
+
+    @Test
+    public void removeTestError(){
+        MyDictionary<String, IntValue> dict = new MyDictionary<String, IntValue>();
+
+        assertThrows(ADTException.class, () -> dict.remove("a"));
+        assertFalse(dict.isDefined("a"));
+    }
+
+
+    @Test
+    public void toMapTest() throws ADTException {
+        MyDictionary<String, IntValue> dict = new MyDictionary<String, IntValue>();
+
+        dict.put("a", new IntValue(1));
+        dict.put("b", new IntValue(2));
+
+        var map = dict.toMap();
+
+        assertEquals(map.get("a"), dict.lookup("a"));
+        assertEquals(map.get("b"), dict.lookup("b"));
+
+
+    }
+
+    @Test
     public void toStringTest(){
         MyDictionary<String, IntValue> dict = new MyDictionary<String, IntValue>();
 
