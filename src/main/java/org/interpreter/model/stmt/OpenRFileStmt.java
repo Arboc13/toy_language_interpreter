@@ -35,9 +35,3 @@ public record OpenRFileStmt(IExp exp) implements IStmt { // S8
     public String toString() {
         return "openRFile(" + exp + ")"; } }
 
-// TODO: ReadFileStmt(IExp exp, String varName) – S9
-// check varName (declared, type int) and the file (string, in FileTable);
-// readLine(): null -> 0, otherwise Integer.parseInt(line.strip());
-// turn IOException and NumberFormatException into StatementException
-// TODO: CloseRFileStmt(IExp exp) – S10
-// close() the reader, then fileTable.remove(fileName)
