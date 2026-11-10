@@ -17,8 +17,8 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
         if (!(exp.eval(state.getSymTable()) instanceof StringValue fileName))
             throw new StatementException("readFile: " + exp + " is not a string");
         var fileTable = state.getFileTable();
-        if (fileTable.isDefined(fileName))
-            throw new StatementException("readFile: " + fileName + " is already open");
+        if (!fileTable.isDefined(fileName))
+            throw new StatementException("readFile: " + fileName + " is not open");
         var symTable = state.getSymTable();
         if(!symTable.isDefined(varName))
             throw new StatementException("readFile: " + varName + " is not declared.");
@@ -26,14 +26,12 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
             throw new StatementException("readFile: " + varName + " is not an integer.");
         try {
             // no try-with-resources: the file must stay open until close RFile
-            var reader = new BufferedReader(new FileReader(fileName.val()));
+            var reader = fileTable.lookup(fileName);
             String line = reader.readLine();
             if(line == null){
                 int val = Integer.parseInt(line.strip());
                 symTable.update(varName, new IntValue(val));
             }
-
-            
 
         } catch (IOException e) {
             throw new StatementException("ReadFileStmt: cannot open " + fileName + ": " + e.getMessage());
