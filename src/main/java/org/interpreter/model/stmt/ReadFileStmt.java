@@ -27,9 +27,16 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
         try {
             // no try-with-resources: the file must stay open until close RFile
             var reader = new BufferedReader(new FileReader(fileName.val()));
-            fileTable.put(fileName, reader);
+            String line = reader.readLine();
+            if(line == null){
+                int val = Integer.parseInt(line.strip());
+                symTable.update(varName, new IntValue(val));
+            }
+
+            
+
         } catch (IOException e) {
-            throw new StatementException("openRFile: cannot open " + fileName + ": " + e.getMessage());
+            throw new StatementException("ReadFileStmt: cannot open " + fileName + ": " + e.getMessage());
         }
         return state;
     }
