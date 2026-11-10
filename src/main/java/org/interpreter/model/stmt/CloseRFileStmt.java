@@ -20,16 +20,16 @@ public record CloseRFileStmt(IExp exp) implements IStmt {
         if (!fileTable.isDefined(fileName))
             throw new StatementException("CloseRFileStmt: " + fileName + " is not open");
         try {
-            // no try-with-resources: the file must stay open until close RFile
-            var reader = fileTable.lookup(fileName);
-            reader.close();
+            fileTable.lookup(fileName).close();
         } catch (IOException e) {
-            throw new StatementException("CloseRFileStmt: cannot close " + fileName + ": " + e.getMessage());
+            throw new StatementException("closeRFile: cannot close " + fileName + ": " + e.getMessage());
         }
+        fileTable.remove(fileName);
         return state;
     }
+
+    @Override
+    public String toString() {
+        return "closeRFile(" + exp + ")";
+    }
 }
-
-
-// TODO: CloseRFileStmt(IExp exp) – S10
-// close() the reader, then fileTable.remove(fileName)

@@ -57,4 +57,22 @@ class RelationalExpTest {
 
     }
 
+
+    @Test
+    public void nonIntegerLeftOperandThrowsTest(){
+        var e = new RelationalExp(new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(1)), RelOp.LT);
+        assertThrows(org.interpreter.exceptions.ExpressionException.class, () -> e.eval(symTable));
+    }
+
+    @Test
+    public void nonIntegerRightOperandThrowsTest(){
+        var e = new RelationalExp(new ValueExp(new IntValue(1)), new ValueExp(new BoolValue(true)), RelOp.LT);
+        assertThrows(org.interpreter.exceptions.ExpressionException.class, () -> e.eval(symTable));
+    }
+
+    @Test
+    public void toStringIsInfixTest(){
+        assertEquals("(1 < 2)", exp(RelOp.LT, 1, 2).toString());
+        assertEquals("(1 != 2)", exp(RelOp.NE, 1, 2).toString());
+    }
 }

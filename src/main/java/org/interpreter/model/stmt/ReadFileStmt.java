@@ -25,27 +25,20 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
         if (!(symTable.lookup(varName) instanceof IntValue) )
             throw new StatementException("readFile: " + varName + " is not an integer.");
         try {
-            // no try-with-resources: the file must stay open until close RFile
+            // no try-with-resources: the file must stay open until closeRFile
             var reader = fileTable.lookup(fileName);
             String line = reader.readLine();
-            if(line == null){
-                int val = Integer.parseInt(line.strip());
-                symTable.update(varName, new IntValue(val));
-            }
-
+            int val = (line == null) ? 0 : Integer.parseInt(line.strip()); // end of file -> 0
+            symTable.update(varName, new IntValue(val));
         } catch (IOException e) {
-            throw new StatementException("ReadFileStmt: cannot open " + fileName + ": " + e.getMessage());
+            throw new StatementException("readFile: cannot read " + fileName + ": " + e.getMessage());
+        } catch (NumberFormatException e) {
+            throw new StatementException("readFile: line in " + fileName + " is not an integer: " + e.getMessage());
         }
         return state;
     }
 
     @Override
     public String toString() {
-        return "readFile(" + exp + ")"; }
+        return "readFile(" + exp + ", " + varName + ")"; }
 }
-
-
-// TODO: ReadFileStmt(IExp exp, String varName) – S9
-// check varName (declared, type int) and the file (string, in FileTable);
-// readLine(): null -> 0, otherwise Integer.parseInt(line.strip());
-// turn IOException and NumberFormatException into StatementException

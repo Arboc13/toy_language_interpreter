@@ -53,4 +53,13 @@ class MyListTest {
 
         assertEquals("[1, 2]", list.toString());
     }
+
+    @Test
+    public void toListInsertionOrderTest(){
+        MyList<IntValue> list = new MyList<IntValue>();
+        list.add(new IntValue(1));
+        list.add(new IntValue(2));
+
+        assertEquals(java.util.List.of(new IntValue(1), new IntValue(2)), list.toList());
+    }
 }

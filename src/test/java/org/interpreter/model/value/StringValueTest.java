@@ -27,4 +27,10 @@ class StringValueTest {
         assertTrue(val1.equals(val2));
     }
 
+
+    @Test
+    public void equalValuesHaveSameHashCodeTest(){
+        assertEquals(new StringValue("test.in").hashCode(), new StringValue("test.in").hashCode());
+        assertNotEquals(new StringValue("a"), new StringValue("b"));
+    }
 }

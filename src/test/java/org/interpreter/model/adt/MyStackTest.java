@@ -48,4 +48,13 @@ class MyStackTest {
 
         assertEquals("[2, 1]", stack.toString());
     }
+
+    @Test
+    public void toListTopFirstTest(){
+        MyStack<IntValue> stack = new MyStack<IntValue>();
+        stack.push(new IntValue(1));
+        stack.push(new IntValue(2));
+
+        assertEquals(java.util.List.of(new IntValue(2), new IntValue(1)), stack.toList());
+    }
 }
