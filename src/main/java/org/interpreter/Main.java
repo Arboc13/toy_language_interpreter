@@ -18,7 +18,7 @@ public class Main {
         {
             IStmt program = programs.get(i);
             var repo = new Repository(PrgState.of(program), "log" + (i + 1) + ".txt");
-            var controller = new Controller(repo);
+            var controller = new Controller(repo, true);
             menu.addCommand(new RunExampleCommand(String.valueOf(i + 1), program.toString(), controller));
         }
         menu.show();

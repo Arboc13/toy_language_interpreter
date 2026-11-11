@@ -23,7 +23,7 @@ class PrgStateTest {
     @Test
     public void constructorPushesProgramTest() throws ADTException {
         IStack<IStmt> stack = new MyStack<IStmt>();
-        PrgState state = PrgState.of(program);
+        PrgState state = new PrgState(stack, new MyDictionary<>(), new MyList<>(), new MyDictionary<>(), program);
 
         assertSame(stack, state.getExeStack());
         assertFalse(stack.isEmpty());
@@ -35,7 +35,7 @@ class PrgStateTest {
     public void gettersTest(){
         IDictionary<String, IValue> symTable = new MyDictionary<String, IValue>();
         IList<IValue> out = new MyList<IValue>();
-        PrgState state = PrgState.of(program);
+        PrgState state = new PrgState(new MyStack<>(), symTable, out, new MyDictionary<>(), program);
 
         assertSame(symTable, state.getSymTable());
         assertSame(out, state.getOut());

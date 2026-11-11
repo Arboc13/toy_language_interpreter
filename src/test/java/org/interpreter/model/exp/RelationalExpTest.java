@@ -16,7 +16,7 @@ class RelationalExpTest {
 
 
     public RelationalExp exp(RelOp op, int left, int right){
-        return new RelationalExp( new ValueExp(new IntValue(left)), new ValueExp(new IntValue(right)), op);
+        return new RelationalExp(op, new ValueExp(new IntValue(left)), new ValueExp(new IntValue(right)));
     }
 
     @Test
@@ -60,13 +60,13 @@ class RelationalExpTest {
 
     @Test
     public void nonIntegerLeftOperandThrowsTest(){
-        var e = new RelationalExp(new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(1)), RelOp.LT);
+        var e = new RelationalExp(RelOp.LT, new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(1)));
         assertThrows(org.interpreter.exceptions.ExpressionException.class, () -> e.eval(symTable));
     }
 
     @Test
     public void nonIntegerRightOperandThrowsTest(){
-        var e = new RelationalExp(new ValueExp(new IntValue(1)), new ValueExp(new BoolValue(true)), RelOp.LT);
+        var e = new RelationalExp(RelOp.LT, new ValueExp(new IntValue(1)), new ValueExp(new BoolValue(true)));
         assertThrows(org.interpreter.exceptions.ExpressionException.class, () -> e.eval(symTable));
     }
 

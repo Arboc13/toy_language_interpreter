@@ -1,20 +1,18 @@
 package org.interpreter.controller;
 
-import com.sun.nio.sctp.IllegalReceiveException;
-import org.interpreter.exceptions.ADTException;
 import org.interpreter.exceptions.MyException;
 import org.interpreter.exceptions.StatementException;
 import org.interpreter.model.prgstate.PrgState;
 import org.interpreter.model.stmt.IStmt;
 import org.interpreter.repository.IRepository;
 
-
-
 public class Controller {
     private final IRepository repo;
+    private final boolean displayFlag;
 
-    public Controller(IRepository repo) {
+    public Controller(IRepository repo, boolean displayFlag) {
         this.repo = repo;
+        this.displayFlag = displayFlag;
     }
 
     public PrgState oneStep(PrgState state) throws MyException {
@@ -23,21 +21,20 @@ public class Controller {
         IStmt crtStmt = stack.pop();
         return crtStmt.execute(state);
     }
-    public void allStep(boolean display_f) throws MyException {
+
+    public void allStep() throws MyException {
         PrgState prg = repo.getCrtPrg();
-        if (display_f)
-            display(prg.toString()); // only if the display flag is on
+        repo.logPrgStateExec(); // the initial state
+        display(prg);
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
             repo.logPrgStateExec();
-            if (display_f)
-                display(prg.toString());
+            display(prg);
         }
     }
 
-    public void display(String program){
-        IO.println(program + "\n");
+    private void display(PrgState prg) {
+        if (displayFlag)
+            IO.println(prg + "\n");
     }
-
-
 }

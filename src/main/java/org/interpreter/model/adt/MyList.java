@@ -2,21 +2,21 @@ package org.interpreter.model.adt;
 
 import org.interpreter.exceptions.ADTException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MyList<T> implements IList{
+public class MyList<T> implements IList<T> {
+    private final List<T> list = new ArrayList<>();
 
-    private final List<T> list = new ArrayList<T>();
     @Override
-    public void add(Object v) {
-        list.add((T)v);
+    public void add(T v) {
+        list.add(v);
     }
 
     @Override
-    public Object get(int index) throws ADTException {
-        if (index < 0 || index >= list.size()){
+    public T get(int index) throws ADTException {
+        if (index < 0 || index >= list.size())
             throw new ADTException("Invalid index.");
-        }
         return list.get(index);
     }
 
@@ -31,5 +31,5 @@ public class MyList<T> implements IList{
     }
 
     @Override
-    public String toString(){ return list.toString(); }
+    public String toString() { return list.toString(); }
 }

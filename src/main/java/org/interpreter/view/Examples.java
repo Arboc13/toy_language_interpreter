@@ -2,18 +2,25 @@ package org.interpreter.view;
 
 import org.interpreter.model.exp.ArithExp;
 import org.interpreter.model.exp.ArithOp;
+import org.interpreter.model.exp.RelOp;
+import org.interpreter.model.exp.RelationalExp;
 import org.interpreter.model.exp.ValueExp;
 import org.interpreter.model.exp.VarExp;
 import org.interpreter.model.stmt.AssignStmt;
+import org.interpreter.model.stmt.CloseRFileStmt;
 import org.interpreter.model.stmt.CompStmt;
 import org.interpreter.model.stmt.IStmt;
 import org.interpreter.model.stmt.IfStmt;
+import org.interpreter.model.stmt.OpenRFileStmt;
 import org.interpreter.model.stmt.PrintStmt;
+import org.interpreter.model.stmt.ReadFileStmt;
 import org.interpreter.model.stmt.VarDeclStmt;
 import org.interpreter.model.type.BoolType;
 import org.interpreter.model.type.IntType;
+import org.interpreter.model.type.StringType;
 import org.interpreter.model.value.BoolValue;
 import org.interpreter.model.value.IntValue;
+import org.interpreter.model.value.StringValue;
 
 import java.util.List;
 
@@ -42,19 +49,30 @@ public final class Examples {
                                     new AssignStmt("v", new ValueExp(new IntValue(3)))),
                                     new PrintStmt(new VarExp("v"))))));
 
-    public static final IStmt EX4 = new CompStmt(new VarDeclStmt("a", new BoolType()),
-            new CompStmt(new VarDeclStmt("v", new IntType()),
-                    new CompStmt( new PrintStmt(new VarExp("a")),
-                    new CompStmt(new AssignStmt("a", new ValueExp(new BoolValue(true))),
-                            new CompStmt(new IfStmt(new VarExp("a"),
-                                    new AssignStmt("v", new ValueExp(new IntValue(2))),
-                                    new AssignStmt("v", new ValueExp(new IntValue(3)))),
-                                    new PrintStmt(new VarExp("v")))))));
+    // string varf; varf = fileName; openRFile(varf); int varc;
+    // readFile(varf, varc); print(varc); readFile(varf, varc); print(varc); closeRFile(varf)
+    public static IStmt fileExample(String fileName) {
+        return new CompStmt(new VarDeclStmt("varf", new StringType()),
+                new CompStmt(new AssignStmt("varf", new ValueExp(new StringValue(fileName))),
+                new CompStmt(new OpenRFileStmt(new VarExp("varf")),
+                new CompStmt(new VarDeclStmt("varc", new IntType()),
+                new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),
+                new CompStmt(new PrintStmt(new VarExp("varc")),
+                new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),
+                new CompStmt(new PrintStmt(new VarExp("varc")),
+                        new CloseRFileStmt(new VarExp("varf"))))))))));
+    }
 
+    public static final IStmt EX4 = fileExample("test.in");
+
+    // int a; int b; a = 5; b = 7; (if a < b then print(a) else print(b))
     public static final IStmt EX5 = new CompStmt(new VarDeclStmt("a", new IntType()),
-            new AssignStmt("a", new ValueExp(new BoolValue(true))));
+            new CompStmt(new VarDeclStmt("b", new IntType()),
+            new CompStmt(new AssignStmt("a", new ValueExp(new IntValue(5))),
+            new CompStmt(new AssignStmt("b", new ValueExp(new IntValue(7))),
+                    new IfStmt(new RelationalExp(RelOp.LT, new VarExp("a"), new VarExp("b")),
+                            new PrintStmt(new VarExp("a")),
+                            new PrintStmt(new VarExp("b")))))));
 
     public static final List<IStmt> ALL = List.of(EX1, EX2, EX3, EX4, EX5);
 }
-
-//todo: do some cases that faile
