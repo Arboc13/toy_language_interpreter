@@ -29,6 +29,7 @@ public class Controller {
             display(prg.toString()); // only if the display flag is on
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
+            repo.logPrgStateExec();
             if (display_f)
                 display(prg.toString());
         }

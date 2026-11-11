@@ -13,6 +13,7 @@ import org.interpreter.repository.Repository;
 import java.util.List;
 
 public class View {
+    /*
     private final List<IStmt> programs;
     private IStmt selected;
 
@@ -60,12 +61,12 @@ public class View {
             IO.println("No program selected");
             return;
         }
-        Repository repo = new Repository();
+        Repository repo = new Repository(new PrgState(new ));
         repo.addPrg(PrgState.of(selected));
         try {
             new Controller(repo).allStep(true);
         } catch (MyException e) {
             IO.println("Error: " + e.getMessage());
         }
-    }
+    }*/
 }
