@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StringTypeTest {
     @Test
     public void toStringTest(){
-        assertEquals("string", new IntType().toString() );
+        assertEquals("string", new StringType().toString() );
     }
 
     @Test
