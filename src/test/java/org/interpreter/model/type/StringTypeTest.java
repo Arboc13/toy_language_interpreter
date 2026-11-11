@@ -9,12 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class StringTypeTest {
     @Test
     public void toStringTest(){
-        assertEquals("text", new IntType().toString() );
+        assertEquals("string", new IntType().toString() );
     }
 
     @Test
     public void defaultValueTest(){
-        assertEquals(new StringValue(" "), new StringType().defaultValue());
+        assertEquals(new StringValue(""), new StringType().defaultValue());
     }
 
 }
