@@ -50,6 +50,5 @@ public class MyHeap implements IHeap {
     @Override public void setContent(Map<Integer, IValue> content) {
         heap = new HashMap<>(content);
     }
-    // TODO: get and update (a missing address -> ADTException), isDefined,
-    // getContent (Map.copyOf(heap)), toString
+
 }
