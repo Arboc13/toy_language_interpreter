@@ -19,7 +19,7 @@ public class MyHeap implements IHeap {
     @Override
     public IValue get(int address) throws ADTException {
         if (!heap.containsKey(address)){
-            throw new ADTException("Adress isn't in the heap.");
+            throw new ADTException("address " + address + " is not in the heap");
         }
 
         return heap.get(address);
@@ -28,7 +28,7 @@ public class MyHeap implements IHeap {
     @Override
     public void update(int address, IValue value) throws ADTException {
         if (!heap.containsKey(address)){
-            throw new ADTException("Adress isn't in the heap.");
+            throw new ADTException("address " + address + " is not in the heap");
         }
 
         heap.replace(address, value);

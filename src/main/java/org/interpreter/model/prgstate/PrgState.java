@@ -14,10 +14,10 @@ public class PrgState {
     private IList<IValue> out;
     private IDictionary<StringValue, BufferedReader> fileTable;
     private final IStmt originalProgram;
-    private MyHeap heap;
+    private final IHeap heap;
 
     public PrgState(IStack<IStmt> exeStack, IDictionary<String, IValue> symTable,
-                    IList<IValue> out, IDictionary<StringValue, BufferedReader> fileTable, MyHeap heap, IStmt program ) {
+                    IList<IValue> out, IDictionary<StringValue, BufferedReader> fileTable, IHeap heap, IStmt program) {
         this.exeStack = exeStack; // the statements that still have to be executed; the
                                   // top is executed next
         this.symTable = symTable; // the declared variables and their current values
@@ -37,12 +37,15 @@ public class PrgState {
     public IDictionary<String, IValue> getSymTable() {
         return this.symTable;
     }
+    public IHeap getHeap() {
+        return this.heap;
+    }
     public IList<IValue> getOut() {
         return this.out;
     }
 
     @Override
-    public String toString(){ return "ExeStack: " + exeStack  + "\nSymTable: " + symTable + "\nOut: " + out + "\nFileTable: " + fileTable.toMap().keySet(); }
+    public String toString(){ return "ExeStack: " + exeStack  + "\nSymTable: " + symTable + "\nOut: " + out + "\nFileTable: " + fileTable.toMap().keySet() + "\nHeap: " + heap; }
 
     public String toLogString() {
         var sb = new StringBuilder();
@@ -54,7 +57,7 @@ public class PrgState {
         sb.append("FileTable:\n");
         fileTable.toMap().keySet().forEach(f -> sb.append(f.val()).append('\n'));
         sb.append("Heap:\n");
-        new TreeMap<>(heap.getContent()).forEach((k, v) -> sb.append(k).append(" ---> ").append(v).append('\n'));
+        new TreeMap<>(heap.getContent()).forEach((k, v) -> sb.append(k).append(" --> ").append(v).append('\n'));
 
         return sb.toString();
 

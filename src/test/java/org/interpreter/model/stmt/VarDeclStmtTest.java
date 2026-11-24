@@ -63,6 +63,22 @@ class VarDeclStmtTest {
     }
 
     @Test
+    public void declaresRefWithDefaultNullTest() throws MyException {
+        new VarDeclStmt("x1", new org.interpreter.model.type.RefType(new IntType())).execute(state);
+        new VarDeclStmt("x3", new org.interpreter.model.type.RefType(
+                new org.interpreter.model.type.RefType(new IntType()))).execute(state);
+
+        assertEquals(new org.interpreter.model.value.RefValue(0, new IntType()), state.getSymTable().lookup("x1"));
+        assertEquals(new org.interpreter.model.value.RefValue(0, new org.interpreter.model.type.RefType(new IntType())),
+                state.getSymTable().lookup("x3"));
+    }
+
+    @Test
+    public void refDeclToStringTest(){
+        assertEquals("Ref(int) v", new VarDeclStmt("v", new org.interpreter.model.type.RefType(new IntType())).toString());
+    }
+
+    @Test
     public void stringDeclToStringTest(){
         assertEquals("string varf", new VarDeclStmt("varf", new org.interpreter.model.type.StringType()).toString());
     }
