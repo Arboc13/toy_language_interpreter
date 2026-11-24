@@ -2,16 +2,17 @@ package org.interpreter.model.exp;
 
 import org.interpreter.model.adt.IDictionary;
 import org.interpreter.exceptions.MyException;
+import org.interpreter.model.adt.IHeap;
 import org.interpreter.model.value.BoolValue;
 import org.interpreter.model.value.IValue;
 
 public record LogicExp(LogicOp op, IExp left, IExp right) implements IExp {
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable) throws MyException {
-        if(!(left.eval(symTable) instanceof BoolValue(boolean n1))){
+    public IValue eval(IDictionary<String, IValue> symTable, IHeap heap) throws MyException {
+        if(!(left.eval(symTable, heap) instanceof BoolValue(boolean n1))){
             throw new MyException("First operant is not a boolean");
         }
-        if(!(right.eval(symTable) instanceof BoolValue(boolean n2))){
+        if(!(right.eval(symTable, heap) instanceof BoolValue(boolean n2))){
             throw new MyException("Second operant is not a boolean");
         }
         return  switch (op){
@@ -24,4 +25,6 @@ public record LogicExp(LogicOp op, IExp left, IExp right) implements IExp {
     public String toString(){
         return "(" + left + " " + op + " " + right + ")";
     }
+
+
 }

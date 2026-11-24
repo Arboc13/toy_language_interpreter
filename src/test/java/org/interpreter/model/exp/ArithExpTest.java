@@ -3,7 +3,9 @@ package org.interpreter.model.exp;
 import org.interpreter.exceptions.ExpressionException;
 import org.interpreter.exceptions.MyException;
 import org.interpreter.model.adt.IDictionary;
+import org.interpreter.model.adt.IHeap;
 import org.interpreter.model.adt.MyDictionary;
+import org.interpreter.model.adt.MyHeap;
 import org.interpreter.model.value.BoolValue;
 import org.interpreter.model.value.IValue;
 import org.interpreter.model.value.IntValue;
@@ -14,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArithExpTest {
 
     private final IDictionary<String, IValue> symTable = new MyDictionary<String, IValue>();
+    private final IHeap heap = new MyHeap();
 
     private ArithExp exp(ArithOp op, int left, int right){
         return new ArithExp(op, new ValueExp(new IntValue(left)), new ValueExp(new IntValue(right)));
@@ -21,48 +24,48 @@ class ArithExpTest {
 
     @Test
     public void addTest() throws MyException {
-        assertEquals(new IntValue(7), exp(ArithOp.ADD, 3, 4).eval(symTable));
+        assertEquals(new IntValue(7), exp(ArithOp.ADD, 3, 4).eval(symTable, heap));
     }
 
     @Test
     public void subTest() throws MyException {
-        assertEquals(new IntValue(-1), exp(ArithOp.SUB, 3, 4).eval(symTable));
+        assertEquals(new IntValue(-1), exp(ArithOp.SUB, 3, 4).eval(symTable, heap));
     }
 
     @Test
     public void mulTest() throws MyException {
-        assertEquals(new IntValue(12), exp(ArithOp.MUL, 3, 4).eval(symTable));
+        assertEquals(new IntValue(12), exp(ArithOp.MUL, 3, 4).eval(symTable, heap));
     }
 
     @Test
     public void divTest() throws MyException {
-        assertEquals(new IntValue(3), exp(ArithOp.DIV, 7, 2).eval(symTable));
+        assertEquals(new IntValue(3), exp(ArithOp.DIV, 7, 2).eval(symTable, heap));
     }
 
     @Test
     public void divByZeroTestError(){
-        assertThrows(ExpressionException.class, () -> exp(ArithOp.DIV, 7, 0).eval(symTable));
+        assertThrows(ExpressionException.class, () -> exp(ArithOp.DIV, 7, 0).eval(symTable, heap));
     }
 
     @Test
     public void nestedTest() throws MyException {
         ArithExp nested = new ArithExp(ArithOp.MUL, exp(ArithOp.ADD, 1, 2), new ValueExp(new IntValue(4)));
 
-        assertEquals(new IntValue(12), nested.eval(symTable));
+        assertEquals(new IntValue(12), nested.eval(symTable, heap));
     }
 
     @Test
     public void firstOperandTestError(){
         ArithExp e = new ArithExp(ArithOp.ADD, new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(1)));
 
-        assertThrows(ExpressionException.class, () -> e.eval(symTable));
+        assertThrows(ExpressionException.class, () -> e.eval(symTable, heap));
     }
 
     @Test
     public void secondOperandTestError(){
         ArithExp e = new ArithExp(ArithOp.ADD, new ValueExp(new IntValue(1)), new ValueExp(new BoolValue(true)));
 
-        assertThrows(ExpressionException.class, () -> e.eval(symTable));
+        assertThrows(ExpressionException.class, () -> e.eval(symTable, heap));
     }
 
     @Test

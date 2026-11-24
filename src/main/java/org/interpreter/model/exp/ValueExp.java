@@ -2,12 +2,13 @@ package org.interpreter.model.exp;
 
 import org.interpreter.model.adt.IDictionary;
 import org.interpreter.exceptions.MyException;
+import org.interpreter.model.adt.IHeap;
 import org.interpreter.model.value.IValue;
 
 public record ValueExp(IValue exp) implements IExp{
 
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable) throws MyException {
+    public IValue eval(IDictionary<String, IValue> symTable, IHeap heap) throws MyException {
         return exp;
     }
 
