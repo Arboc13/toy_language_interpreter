@@ -25,9 +25,3 @@ public record NewStmt(String varName, IExp exp) implements IStmt { // S11
     }
     @Override public String toString() { return "new(" + varName + ", " + exp + ")"; }
 }
-
-
-// TODO: ReadHeapExp(IExp exp) – E6, toString "rH(" + exp + ")"
-// the value of exp must be a RefValue; its address must be in the heap
-// TODO: WriteHeapStmt(String varName, IExp exp) – S12, toString "wH(…, …)"
-// check the variable, the address and the type, then heap.update(…)
