@@ -7,7 +7,7 @@ import org.interpreter.model.stmt.IStmt;
 import org.interpreter.repository.IRepository;
 
 import static org.interpreter.controller.GarbageCollector.getAddrFromSymTable;
-import static org.interpreter.controller.GarbageCollector.unsafeGarbageCollector;
+import static org.interpreter.controller.GarbageCollector.safeGarbageCollector;
 
 public class Controller {
     private final IRepository repo;
@@ -32,7 +32,7 @@ public class Controller {
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
             repo.logPrgStateExec();
-            prg.getHeap().setContent(unsafeGarbageCollector(
+            prg.getHeap().setContent(safeGarbageCollector(
                     getAddrFromSymTable(prg.getSymTable().toMap().values()),
                     prg.getHeap().getContent()));
             repo.logPrgStateExec();
