@@ -84,4 +84,51 @@ class HeapStmtTest {
     public void newToStringTest(){
         assertEquals("new(v, 20)", new NewStmt("v", new ValueExp(new IntValue(20))).toString());
     }
+
+    @Test
+    public void writeChangesTheHeapLocationTest() throws MyException {
+        new NewStmt("v", new ValueExp(new IntValue(20))).execute(state);
+        new WriteHeapStmt("v", new ValueExp(new IntValue(30))).execute(state);
+
+        assertEquals(new IntValue(30), state.getHeap().get(1));
+        assertEquals(1, state.getHeap().getContent().size());
+        assertEquals(new RefValue(1, new IntType()), state.getSymTable().lookup("v"));
+    }
+
+    @Test
+    public void writeUndeclaredVariableTestError(){
+        WriteHeapStmt stmt = new WriteHeapStmt("x", new ValueExp(new IntValue(30)));
+
+        assertThrows(StatementException.class, () -> stmt.execute(state));
+    }
+
+    @Test
+    public void writeNonReferenceVariableTestError() throws MyException {
+        new VarDeclStmt("x", new IntType()).execute(state);
+        WriteHeapStmt stmt = new WriteHeapStmt("x", new ValueExp(new IntValue(30)));
+
+        assertThrows(StatementException.class, () -> stmt.execute(state));
+    }
+
+    @Test
+    public void writeAddressNotInHeapTestError(){
+        WriteHeapStmt stmt = new WriteHeapStmt("v", new ValueExp(new IntValue(30)));
+
+        assertThrows(StatementException.class, () -> stmt.execute(state));
+        assertTrue(state.getHeap().getContent().isEmpty());
+    }
+
+    @Test
+    public void writeWrongTypeTestError() throws MyException {
+        new NewStmt("v", new ValueExp(new IntValue(20))).execute(state);
+        WriteHeapStmt stmt = new WriteHeapStmt("v", new ValueExp(new BoolValue(true)));
+
+        assertThrows(StatementException.class, () -> stmt.execute(state));
+        assertEquals(new IntValue(20), state.getHeap().get(1));
+    }
+
+    @Test
+    public void writeToStringTest(){
+        assertEquals("wH(v, 30)", new WriteHeapStmt("v", new ValueExp(new IntValue(30))).toString());
+    }
 }
