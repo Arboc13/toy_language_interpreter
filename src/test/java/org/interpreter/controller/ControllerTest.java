@@ -11,7 +11,12 @@ import org.interpreter.model.prgstate.PrgState;
 import org.interpreter.model.stmt.AssignStmt;
 import org.interpreter.model.stmt.CompStmt;
 import org.interpreter.model.stmt.IStmt;
+import org.interpreter.model.stmt.NewStmt;
+import org.interpreter.model.stmt.VarDeclStmt;
+import org.interpreter.model.type.IntType;
+import org.interpreter.model.type.RefType;
 import org.interpreter.model.value.IntValue;
+import org.interpreter.model.value.RefValue;
 import org.interpreter.repository.Repository;
 import org.interpreter.view.Examples;
 import org.junit.jupiter.api.Test;
@@ -19,6 +24,8 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -145,6 +152,76 @@ class ControllerTest {
         int a = log.indexOf("ExeStack:"), b = log.indexOf("SymTable:"),
             c = log.indexOf("Out:"), d = log.indexOf("FileTable:");
         assertTrue(0 <= a && a < b && b < c && c < d);
+    }
+
+    @Test
+    public void example6Test() throws MyException {
+        PrgState s = run(Examples.EX6);
+
+        assertEquals(Map.of(1, new IntValue(20), 2, new RefValue(1, new IntType())), s.getHeap().getContent());
+        assertEquals(new RefValue(1, new IntType()), s.getSymTable().lookup("v"));
+        assertEquals(new RefValue(2, new RefType(new IntType())), s.getSymTable().lookup("a"));
+        assertEquals(List.of(new RefValue(1, new IntType()), new RefValue(2, new RefType(new IntType()))),
+                s.getOut().toList());
+    }
+
+    @Test
+    public void example7Test() throws MyException {
+        PrgState s = run(Examples.EX7);
+
+        assertEquals(Map.of(1, new IntValue(20), 2, new RefValue(1, new IntType())), s.getHeap().getContent());
+        assertEquals(List.of(new IntValue(20), new IntValue(25)), s.getOut().toList());
+    }
+
+    @Test
+    public void example8Test() throws MyException {
+        PrgState s = run(Examples.EX8);
+
+        assertEquals(Map.of(1, new IntValue(30)), s.getHeap().getContent());
+        assertEquals(new RefValue(1, new IntType()), s.getSymTable().lookup("v"));
+        assertEquals(List.of(new IntValue(20), new IntValue(35)), s.getOut().toList());
+    }
+
+    @Test
+    public void example9PrintsTwentyWithSafeGarbageCollectorTest() throws MyException {
+        PrgState s = run(Examples.EX9);
+
+        assertEquals(List.of(new IntValue(20)), s.getOut().toList());
+        assertEquals(Map.of(1, new IntValue(20), 2, new RefValue(1, new IntType()), 3, new IntValue(30)),
+                s.getHeap().getContent());
+    }
+
+    @Test
+    public void example10Test() throws MyException {
+        PrgState s = run(Examples.EX10);
+
+        assertEquals(List.of(new IntValue(4), new IntValue(3), new IntValue(2), new IntValue(1), new IntValue(0)),
+                s.getOut().toList());
+    }
+
+    @Test
+    public void garbageCollectorRemovesUnreachableLocationTest() throws MyException {
+        IStmt program = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                        new NewStmt("v", new ValueExp(new IntValue(30)))));
+
+        PrgState s = run(program);
+
+        assertEquals(Map.of(2, new IntValue(30)), s.getHeap().getContent());
+    }
+
+    @Test
+    public void logFileShowsHeapBeforeAndAfterGarbageCollectionTest() throws Exception {
+        IStmt program = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                        new NewStmt("v", new ValueExp(new IntValue(30)))));
+
+        run(program);
+
+        String log = Files.readString(dir.resolve("log.txt"));
+        assertTrue(log.contains("Heap:\n1 --> 20\n2 --> 30\n"));
+        assertTrue(log.strip().endsWith("Heap:\n2 --> 30"));
+        assertTrue(log.indexOf("FileTable:") < log.indexOf("Heap:"));
     }
 
     @Test
