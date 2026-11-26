@@ -6,6 +6,9 @@ import org.interpreter.model.prgstate.PrgState;
 import org.interpreter.model.stmt.IStmt;
 import org.interpreter.repository.IRepository;
 
+import static org.interpreter.controller.GarbageCollector.getAddrFromSymTable;
+import static org.interpreter.controller.GarbageCollector.unsafeGarbageCollector;
+
 public class Controller {
     private final IRepository repo;
     private final boolean displayFlag;
